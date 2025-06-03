@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { Cards } from "./Cards";
+import { Cards } from "../components/Cards";
 
 class Main extends Component {
     constructor(props) {
@@ -23,7 +23,8 @@ class Main extends Component {
         const {cards} = this.state;
         return (
             <main className="container content main-content">
-                <Cards cards={cards} />
+                {cards.length ? <Cards cards={cards} /> : 
+                <h3>Loading...</h3>}
             </main>
         )
     }
