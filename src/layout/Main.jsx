@@ -1,5 +1,8 @@
 import { Component } from "react"
+
 import { Cards } from "../components/Cards";
+import { Preloader } from "../components/Preloader";
+import { Search } from "../components/Search";
 
 class Main extends Component {
     constructor(props) {
@@ -7,24 +10,35 @@ class Main extends Component {
 
         this.state = {
             cards: [],
+            search: ''
         }
     };
 
     componentDidMount() {
-        fetch('http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=matrix&page=1')
+        fetch('http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=matrix')
             .then(response => response.json())
             .then(data => {
                 this.setState({ cards: data.Search })
             })
-            // .catch(error => console.log('Ошибка:', error));
+    }
+
+    searchMovies = (value) => {
+        fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}`)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ cards: data.Search })
+            })
     }
 
     render() {
-        const {cards} = this.state;
+
+        const { cards } = this.state;
+
         return (
             <main className="container content main-content">
-                {cards.length ? <Cards cards={cards} /> : 
-                <h3>Loading...</h3>}
+                <Search searchMovies={this.searchMovies} />
+                {cards.length ? <Cards cards={cards} /> :
+                    <Preloader />}
             </main>
         )
     }
