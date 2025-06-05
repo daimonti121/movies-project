@@ -10,7 +10,8 @@ class Main extends Component {
 
         this.state = {
             cards: [],
-            search: ''
+            search: '',
+            filter: '',
         }
     };
 
@@ -22,12 +23,20 @@ class Main extends Component {
             })
     }
 
-    searchMovies = (value) => {
-        fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({ cards: data.Search })
-            })
+    searchMovies = (value, type) => {
+        if (type === 'all') {
+            fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ cards: data.Search })
+                })
+        } else {
+            fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}&type=${type}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ cards: data.Search })
+                })
+        }
     }
 
     render() {
