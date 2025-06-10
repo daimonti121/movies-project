@@ -12,6 +12,7 @@ class Main extends Component {
             cards: [],
             search: '',
             filter: '',
+            loading: true,
         };
     }
 
@@ -19,11 +20,12 @@ class Main extends Component {
         fetch('http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=matrix')
             .then((response) => response.json())
             .then((data) => {
-                this.setState({ cards: data.Search });
+                this.setState({ cards: data.Search, loading: false });
             });
     }
 
     searchMovies = (value, type = 'all') => {
+        this.setState({ loading: true });
         fetch(
             `http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}${
                 type !== 'all' ? `&type=${type}` : ''
@@ -31,17 +33,17 @@ class Main extends Component {
         )
             .then((response) => response.json())
             .then((data) => {
-                this.setState({ cards: data.Search });
+                this.setState({ cards: data.Search, loading: false });
             });
     };
 
     render() {
-        const { cards } = this.state;
+        const { cards, loading } = this.state;
 
         return (
             <main className='container content main-content'>
                 <Search searchMovies={this.searchMovies} />
-                {cards.length ? <Cards cards={cards} /> : <Preloader />}
+                {loading ? <Preloader /> : <Cards cards={cards} />}
             </main>
         );
     }
