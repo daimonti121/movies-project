@@ -4,6 +4,8 @@ import { Cards } from '../components/Cards';
 import { Preloader } from '../components/Preloader';
 import { Search } from '../components/Search';
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        fetch('http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=matrix')
+        fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=matrix`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({ cards: data.Search, loading: false });
@@ -27,7 +29,7 @@ class Main extends Component {
     searchMovies = (value, type = 'all') => {
         this.setState({ loading: true });
         fetch(
-            `http://www.omdbapi.com/?i=tt3896198&apikey=377f9cd0&s=${value}${
+            `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${value}${
                 type !== 'all' ? `&type=${type}` : ''
             }`
         )
