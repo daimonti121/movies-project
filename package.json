@@ -2,7 +2,8 @@
   "name": "movies-project",
   "private": true,
   "version": "0.0.0",
-  "base": "/https://daimonti121.github.io/movies-project/",
+  "base": "/movies-project/",
+
   "type": "module",
   "scripts": {
     "dev": "vite",
