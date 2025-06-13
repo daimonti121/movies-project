@@ -19,7 +19,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=matrix`)
+        fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=mad max`)
             .then((response) => response.json())
             .then((data) => {
                 this.setState({ cards: data.Search, loading: false });
@@ -30,11 +30,11 @@ class Main extends Component {
             });
     }
 
-    searchMovies = (value, type = 'all') => {
+    searchMovies = (value, filter = 'all') => {
         this.setState({ loading: true });
         fetch(
             `https://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${value}${
-                type !== 'all' ? `&type=${type}` : ''
+                filter !== 'all' ? `&type=${filter}` : ''
             }`
         )
             .then((response) => response.json())
