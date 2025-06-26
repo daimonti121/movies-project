@@ -1,108 +1,98 @@
-import { Component } from 'react';
+import { useState } from 'react';
 
-class Search extends Component {
-    constructor(props) {
-        super(props);
+const Search = (props) => {
+    const { searchMovies = Function.prototype } = props;
 
-        this.state = {
-            search: '',
-            filter: 'all',
-        };
-    }
+    const [search, setSearch] = useState('');
+    const [filter, setFilter] = useState('all');
 
-    handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            this.props.searchMovies(this.state.search, this.state.filter);
+            searchMovies(search, filter);
 
-            this.setState({
-                search: '',
-                filter: 'all',
-            });
+            setSearch('');
+            setFilter('all');
         }
     };
-    
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        });
+
+    const handleChange = (e) => {
+        setSearch(e.target.value);
     };
 
-    render() {
-        const { search, filter } = this.state;
+    const handleChangeFilter = (e) => {
+        setFilter(e.target.value);
+    };
 
-        return (
-            <div className='row'>
-                <div className='col s12'>
-                    <div className='input-field'>
-                        <input
-                            className='validate'
-                            placeholder='search'
-                            type='search'
-                            name='search'
-                            value={search}
-                            onChange={this.handleChange}
-                            onKeyDown={this.handleKeyDown}
-                        />
-                        <button
-                            className='btn search-btn'
-                            onClick={() => {
-                                this.props.searchMovies(
-                                    this.state.search,
-                                    this.state.filter
-                                );
-                                this.setState({ search: '', filter: 'all' });
-                            }}
-                        >
-                            Search
-                        </button>
-                    </div>
-                    <div className='input-field display-flex'>
-                        <p className='margin'>
-                            <label>
-                                <input
-                                    className='with-gap'
-                                    type='radio'
-                                    name='filter'
-                                    value='all'
-                                    checked={filter === 'all'}
-                                    onChange={this.handleChange}
-                                />
-                                <span>All</span>
-                            </label>
-                        </p>
+    return (
+        <div className='row'>
+            <div className='col s12'>
+                <div className='input-field'>
+                    <input
+                        className='validate'
+                        placeholder='search'
+                        type='search'
+                        name='search'
+                        value={search}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button
+                        className='btn search-btn'
+                        onClick={() => {
+                            searchMovies(search, filter);
+                            setFilter('all');
+                            setSearch('');
+                        }}
+                    >
+                        Search
+                    </button>
+                </div>
+                <div className='input-field display-flex'>
+                    <p className='margin'>
+                        <label>
+                            <input
+                                className='with-gap'
+                                type='radio'
+                                name='filter'
+                                value='all'
+                                checked={filter === 'all'}
+                                onChange={handleChangeFilter}
+                            />
+                            <span>All</span>
+                        </label>
+                    </p>
 
-                        <p className='margin'>
-                            <label>
-                                <input
-                                    className='with-gap'
-                                    type='radio'
-                                    name='filter'
-                                    value='movie'
-                                    checked={filter === 'movie'}
-                                    onChange={this.handleChange}
-                                />
-                                <span>Movies only</span>
-                            </label>
-                        </p>
+                    <p className='margin'>
+                        <label>
+                            <input
+                                className='with-gap'
+                                type='radio'
+                                name='filter'
+                                value='movie'
+                                checked={filter === 'movie'}
+                                onChange={handleChangeFilter}
+                            />
+                            <span>Movies only</span>
+                        </label>
+                    </p>
 
-                        <p className='margin'>
-                            <label>
-                                <input
-                                    className='with-gap'
-                                    type='radio'
-                                    name='filter'
-                                    value='series'
-                                    checked={filter === 'series'}
-                                    onChange={this.handleChange}
-                                />
-                                <span>Series only</span>
-                            </label>
-                        </p>
-                    </div>
+                    <p className='margin'>
+                        <label>
+                            <input
+                                className='with-gap'
+                                type='radio'
+                                name='filter'
+                                value='series'
+                                checked={filter === 'series'}
+                                onChange={handleChangeFilter}
+                            />
+                            <span>Series only</span>
+                        </label>
+                    </p>
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export { Search };
